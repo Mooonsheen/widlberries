@@ -1,0 +1,19 @@
+version: "3.9"
+services:
+  postgres:
+    image: postgres:14.9
+    environment:
+      POSTGRES_DB: "wb_l0"
+      POSTGRES_USER: "admin"
+      POSTGRES_PASSWORD: "admin"
+    ports:
+      - "5432:5432"
+
+  nats-streaming:
+    # command:
+    # - nats-streaming
+    container_name: nats-streaming
+    image: nats-streaming
+    ports:
+    - 4222:4222
+    - 8222:8222
