@@ -1,20 +1,20 @@
 .PHONY: server
 server:
-	go build -v ./cmd/server
+	go build -v ./cmd/server ;
 	./server
 
 .PHONY: migrate
 migrate:
-	go build -v ./cmd/migrate
+	go build -v ./cmd/migrate ;
 	./migrate
 
 .PHONY: test
 test:
-	go test -v -race -timeout 30s ./...
+	go test -v -race -timeout 30s ./... ;
 
 .PHONY: publisher
 publisher:
-	go build -v ./cmd/publisher
+	go build -v ./cmd/publisher ;
 
 .PHONY: up
 up:

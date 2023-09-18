@@ -86,7 +86,9 @@ func (s *Server) handleRequest(m *stan.Msg) {
 	}
 	if ok := s.addToCache(data); ok {
 		logrus.Info("Add to cache")
-		s.db.AddOrder(data)
+		if err := s.db.AddOrder(data); err != nil {
+			logrus.Info("Failed add db\n", err)
+		}
 	}
 }
 

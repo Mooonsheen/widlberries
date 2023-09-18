@@ -1,10 +1,14 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"os"
+	"wildberries/internal/model"
 
+	"github.com/go-playground/validator/v10"
 	"github.com/nats-io/stan.go"
+	"github.com/sirupsen/logrus"
 )
 
 func main() {
@@ -20,5 +24,17 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	sc.Publish("addNewOrder", b)
+
+	var order model.Order
+	err = json.Unmarshal([]byte(b), &order)
+	if err != nil {
+		logrus.Info("Failed unmarshal json\n", err)
+	}
+	validate := validator.New()
+	err = validate.Struct(order)
+	if err != nil {
+		logrus.Info("Invalid json\n", err)
+	} else {
+		sc.Publish("addNewOrder", b)
+	}
 }
